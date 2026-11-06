@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Happy Diwali | Dhananjay Nimbalkar</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --gold: #ffd54f;
+        --amber: #ff9800;
+        --cream: #f6e3b8;
+        --bg: #070300;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        background: radial-gradient(
+          ellipse at 50% 60%,
+          #2a1103 0%,
+          #0d0501 50%,
+          #000 100%
+        );
+        font-family: "Poppins", system-ui, sans-serif;
+        color: var(--cream);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      canvas {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      .glow {
+        position: fixed;
+        left: 50%;
+        top: 55%;
+        width: 820px;
+        height: 820px;
+        max-width: 140vw;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(
+          circle,
+          rgba(255, 130, 0, 0.18),
+          transparent 65%
+        );
+        z-index: 0;
+        animation: breathe 5s ease-in-out infinite;
+      }
+      @keyframes breathe {
+        50% {
+          opacity: 0.6;
+          transform: translate(-50%, -50%) scale(1.08);
+        }
+      }
+      .card {
+        position: relative;
+        z-index: 10;
+        width: 92%;
+        max-width: 480px;
+        padding: 44px 34px 38px;
+        text-align: center;
+        border-radius: 34px;
+        background: linear-gradient(
+          165deg,
+          rgba(60, 26, 6, 0.72),
+          rgba(18, 7, 1, 0.82)
+        );
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid rgba(255, 200, 80, 0.35);
+        box-shadow:
+          0 0 90px rgba(255, 140, 0, 0.2),
+          0 30px 70px rgba(0, 0, 0, 0.6),
+          inset 0 1px 0 rgba(255, 215, 120, 0.2);
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+        transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .card.in {
+        opacity: 1;
+        transform: none;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 55%;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          #ffc107,
+          #ff9800,
+          #ffc107,
+          transparent
+        );
+      }
+      .diyas {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 22px;
+      }
+      .diya {
+        width: 46px;
+        height: 62px;
+        position: relative;
+        cursor: pointer;
+      }
+      .base {
+        position: absolute;
+        bottom: 0;
+        width: 46px;
+        height: 20px;
+        border-radius: 6px 6px 50% 50%/6px 6px 100% 100%;
+        background: linear-gradient(#f0b050, #8a4a12);
+        box-shadow:
+          0 6px 16px rgba(0, 0, 0, 0.5),
+          inset 0 2px 0 rgba(255, 230, 160, 0.5);
+      }
+      .flame {
+        position: absolute;
+        bottom: 17px;
+        left: 50%;
+        width: 15px;
+        height: 32px;
+        transform: translateX(-50%);
+        border-radius: 50% 50% 20% 20%;
+        background: radial-gradient(
+          ellipse at bottom,
+          #fff 0,
+          #fff59d 22%,
+          #ffb300 62%,
+          #e65100
+        );
+        box-shadow:
+          0 0 22px #ff9800,
+          0 0 48px #ff6f00,
+          0 0 80px rgba(255, 100, 0, 0.5);
+        animation: fl 1.5s infinite alternate;
+        transform-origin: bottom;
+      }
+      .diya:nth-child(2) .flame {
+        animation-delay: 0.4s;
+        height: 38px;
+      }
+      .diya:nth-child(3) .flame {
+        animation-delay: 0.8s;
+      }
+      @keyframes fl {
+        0% {
+          transform: translateX(-50%) scale(1) rotate(-3deg);
+        }
+        50% {
+          transform: translateX(-50%) scale(1.1, 1.06) rotate(2deg);
+        }
+        100% {
+          transform: translateX(-50%) scale(0.92) rotate(-1deg);
+        }
+      }
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-weight: 800;
+        font-size: 3.1rem;
+        line-height: 1.1;
+        background: linear-gradient(135deg, #fff0b3, #ffc107 45%, #ff8f00);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 8px;
+      }
+      .sub {
+        font-size: 0.82rem;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: #e0c07a;
+        margin-bottom: 20px;
+      }
+      .div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 22px;
+        color: var(--gold);
+      }
+      .div::before,
+      .div::after {
+        content: "";
+        width: 60px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, #ffb300);
+      }
+      .div::after {
+        transform: scaleX(-1);
+      }
+      .msg {
+        font-size: 1.1rem;
+        line-height: 1.85;
+        font-weight: 300;
+        min-height: 104px;
+        margin-bottom: 22px;
+      }
+      .msg b {
+        color: var(--gold);
+        font-weight: 500;
+      }
+      .cur {
+        display: inline-block;
+        width: 2px;
+        height: 1.1em;
+        background: var(--gold);
+        vertical-align: -3px;
+        margin-left: 3px;
+        animation: bl 0.8s step-end infinite;
+      }
+      @keyframes bl {
+        50% {
+          opacity: 0;
+        }
+      }
+      .tags,
+      .foot {
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 1s ease;
+      }
+      .show {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+      .tag {
+        padding: 7px 16px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        color: #ffe082;
+        background: rgba(255, 180, 40, 0.1);
+        border: 1px solid rgba(255, 190, 50, 0.3);
+      }
+      .foot {
+        margin-top: 28px;
+        font-size: 0.9rem;
+        color: #c9a86c;
+        font-weight: 300;
+      }
+      .foot .n {
+        display: block;
+        margin-top: 4px;
+        font-family: "Playfair Display", serif;
+        font-size: 1.45rem;
+        font-weight: 600;
+        color: var(--gold);
+      }
+      .hint {
+        margin-top: 16px;
+        font-size: 0.74rem;
+        color: #a98d57;
+        letter-spacing: 1px;
+      }
+      #start {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        background: radial-gradient(ellipse at center, #1d0b02, #000);
+        transition:
+          opacity 1s,
+          visibility 1s;
+      }
+      #start.out {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #start p {
+        font-family: "Playfair Display", serif;
+        font-size: 1.6rem;
+        color: var(--gold);
+      }
+      #go {
+        font:
+          500 1.05rem "Poppins",
+          sans-serif;
+        color: #2a1000;
+        padding: 16px 34px;
+        border: 0;
+        border-radius: 60px;
+        cursor: pointer;
+        background: linear-gradient(135deg, #ffe082, #ff9800);
+        box-shadow: 0 0 40px rgba(255, 150, 0, 0.55);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        50% {
+          box-shadow: 0 0 70px rgba(255, 170, 0, 0.9);
+          transform: scale(1.04);
+        }
+      }
+      #snd {
+        position: fixed;
+        right: max(20px, env(safe-area-inset-right));
+        bottom: max(20px, env(safe-area-inset-bottom));
+        z-index: 40;
+        padding: 11px 18px;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 200, 50, 0.4);
+        background: rgba(255, 180, 40, 0.15);
+        color: var(--gold);
+        font:
+          400 0.88rem "Poppins",
+          sans-serif;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+      }
+      #act {
+        position: fixed;
+        left: max(20px, env(safe-area-inset-left));
+        bottom: max(20px, env(safe-area-inset-bottom));
+        z-index: 40;
+        display: flex;
+        gap: 10px;
+      }
+      #act button {
+        padding: 11px 16px;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 200, 50, 0.4);
+        background: rgba(255, 120, 20, 0.22);
+        color: #ffe082;
+        font:
+          500 0.86rem "Poppins",
+          sans-serif;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        transition: transform 0.15s;
+      }
+      #act button:active {
+        transform: scale(0.9);
+      }
+      @media (max-width: 480px) {
+        .card {
+          padding: 36px 22px 30px;
+        }
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow"></div>
+    <canvas id="fx"></canvas>
+
+    <div id="start">
+      <div style="font-size: 3rem">🪔</div>
+      <p>Shubh Deepavali</p>
+      <button id="go">Light the Diyas &amp; Begin</button>
+      <span style="font-size: 0.78rem; color: #8c7340"
+        >Best with sound on 🔊</span
+      >
+    </div>
+
+    <button id="snd">🔊 Sound On</button>
+    <div id="act">
+      <button id="bRocket">🚀 Rocket</button
+      ><button id="bShots">💥 Shots</button>
+    </div>
+
+    <div class="card" id="card">
+      <div class="diyas">
+        <div class="diya">
+          <div class="flame"></div>
+          <div class="base"></div>
+        </div>
+        <div class="diya">
+          <div class="flame"></div>
+          <div class="base"></div>
+        </div>
+        <div class="diya">
+          <div class="flame"></div>
+          <div class="base"></div>
+        </div>
+      </div>
+      <h1>Happy Diwali</h1>
+      <div class="sub">Festival of Lights</div>
+      <div class="div">✦</div>
+      <p class="msg"><span id="t"></span><span class="cur" id="cur"></span></p>
+      <div class="tags" id="tags">
+        <span class="tag">✨ Light</span><span class="tag">💛 Love</span
+        ><span class="tag">🌟 Prosperity</span
+        ><span class="tag">🪔 Happiness</span>
+      </div>
+      <div class="foot" id="foot">
+        With warm wishes<span class="n">Dhananjay Nimbalkar</span>
+      </div>
+      <div class="hint">Tap anywhere for fireworks 🎆</div>
+    </div>
+
+    <script>
+      // ---------- Audio (synthesized, no files needed) ----------
+      let ac,
+        master,
+        noiseBuf,
+        soundOn = true,
+        musicTimer;
+      function initAudio() {
+        ac = new (window.AudioContext || window.webkitAudioContext)();
+        const comp = ac.createDynamicsCompressor();
+        master = ac.createGain();
+        master.gain.value = 0.8;
+        master.connect(comp);
+        comp.connect(ac.destination);
+        noiseBuf = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate);
+        const d = noiseBuf.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+        drone();
+        melody();
+      }
+      function noise() {
+        const s = ac.createBufferSource();
+        s.buffer = noiseBuf;
+        return s;
+      }
+      function whoosh(dur) {
+        if (!soundOn || !ac) return;
+        const t = ac.currentTime,
+          s = noise(),
+          f = ac.createBiquadFilter(),
+          g = ac.createGain();
+        f.type = "bandpass";
+        f.Q.value = 3;
+        f.frequency.setValueAtTime(500, t);
+        f.frequency.exponentialRampToValueAtTime(3200, t + dur);
+        g.gain.setValueAtTime(0.001, t);
+        g.gain.linearRampToValueAtTime(0.22, t + dur * 0.8);
+        g.gain.linearRampToValueAtTime(0, t + dur);
+        s.connect(f);
+        f.connect(g);
+        g.connect(master);
+        s.start(t);
+        s.stop(t + dur);
+        for (let i = 0; i < Math.floor(dur * 18); i++) {
+          const tt = t + Math.random() * dur,
+            c = noise(),
+            hp = ac.createBiquadFilter(),
+            cg = ac.createGain();
+          hp.type = "highpass";
+          hp.frequency.value = 2500;
+          cg.gain.setValueAtTime(0.12, tt);
+          cg.gain.exponentialRampToValueAtTime(0.001, tt + 0.03);
+          c.connect(hp);
+          hp.connect(cg);
+          cg.connect(master);
+          c.start(tt, Math.random());
+          c.stop(tt + 0.04);
+        }
+      }
+      function pop(vol = 1) {
+        if (!soundOn || !ac) return;
+        const t = ac.currentTime,
+          s = noise(),
+          f = ac.createBiquadFilter(),
+          g = ac.createGain();
+        f.type = "bandpass";
+        f.frequency.value = 1800 + Math.random() * 1800;
+        f.Q.value = 0.7;
+        g.gain.setValueAtTime(0.9 * vol, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+        s.connect(f);
+        f.connect(g);
+        g.connect(master);
+        s.start(t, Math.random());
+        s.stop(t + 0.15);
+        const o = ac.createOscillator(),
+          og = ac.createGain();
+        o.frequency.setValueAtTime(220, t);
+        o.frequency.exponentialRampToValueAtTime(60, t + 0.08);
+        og.gain.setValueAtTime(0.5 * vol, t);
+        og.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+        o.connect(og);
+        og.connect(master);
+        o.start(t);
+        o.stop(t + 0.12);
+      }
+      function boom(vol = 1) {
+        if (!soundOn || !ac) return;
+        const t = ac.currentTime;
+        const o = ac.createOscillator(),
+          g = ac.createGain();
+        o.frequency.setValueAtTime(140, t);
+        o.frequency.exponentialRampToValueAtTime(35, t + 0.5);
+        g.gain.setValueAtTime(0.7 * vol, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+        o.connect(g);
+        g.connect(master);
+        o.start(t);
+        o.stop(t + 0.8);
+        // crack
+        const s = noise(),
+          f = ac.createBiquadFilter(),
+          g2 = ac.createGain();
+        f.type = "lowpass";
+        f.frequency.setValueAtTime(5000, t);
+        f.frequency.exponentialRampToValueAtTime(300, t + 0.35);
+        g2.gain.setValueAtTime(0.8 * vol, t);
+        g2.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+        s.connect(f);
+        f.connect(g2);
+        g2.connect(master);
+        s.start(t);
+        s.stop(t + 0.45);
+        // crackle (fatake sparkle)
+        for (let i = 0; i < 14; i++) {
+          const tt = t + 0.12 + Math.random() * 0.9,
+            c = noise(),
+            hp = ac.createBiquadFilter(),
+            cg = ac.createGain();
+          hp.type = "highpass";
+          hp.frequency.value = 3000 + Math.random() * 3000;
+          cg.gain.setValueAtTime(0.18 * Math.random() * vol, tt);
+          cg.gain.exponentialRampToValueAtTime(0.001, tt + 0.05);
+          c.connect(hp);
+          hp.connect(cg);
+          cg.connect(master);
+          c.start(tt, Math.random());
+          c.stop(tt + 0.06);
+        }
+      }
+      function bell(freq, vol = 0.09, dur = 3) {
+        const t = ac.currentTime;
+        [
+          [1, 1],
+          [2.76, 0.35],
+          [5.4, 0.15],
+        ].forEach(([m, a]) => {
+          const o = ac.createOscillator(),
+            g = ac.createGain();
+          o.type = "sine";
+          o.frequency.value = freq * m;
+          g.gain.setValueAtTime(0, t);
+          g.gain.linearRampToValueAtTime(vol * a, t + 0.01);
+          g.gain.exponentialRampToValueAtTime(0.0005, t + dur);
+          o.connect(g);
+          g.connect(master);
+          o.start(t);
+          o.stop(t + dur + 0.1);
+        });
+      }
+      function drone() {
+        [130.81, 196, 261.63].forEach((f, i) => {
+          const o = ac.createOscillator(),
+            g = ac.createGain(),
+            l = ac.createOscillator(),
+            lg = ac.createGain();
+          o.type = "triangle";
+          o.frequency.value = f;
+          g.gain.value = 0.018 / (i + 1);
+          l.frequency.value = 0.15 + i * 0.07;
+          lg.gain.value = 0.008 / (i + 1);
+          l.connect(lg);
+          lg.connect(g.gain);
+          o.connect(g);
+          g.connect(master);
+          o.start();
+          l.start();
+        });
+      }
+      // Bhoopali-style pentatonic (C D E G A)
+      const scale = [
+        261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25, 784,
+      ];
+      function melody() {
+        let i = 4;
+        const phrase = () => {
+          if (soundOn) {
+            i = Math.max(
+              0,
+              Math.min(
+                scale.length - 1,
+                i + [-2, -1, -1, 0, 1, 1, 2][Math.floor(Math.random() * 7)],
+              ),
+            );
+            bell(scale[i], 0.07);
+            if (Math.random() < 0.3)
+              setTimeout(() => soundOn && bell(scale[i] * 0.5, 0.05), 250);
+          }
+          musicTimer = setTimeout(phrase, 550 + Math.random() * 700);
+        };
+        phrase();
+      }
+
+      // ---------- Fireworks ----------
+      const cv = document.getElementById("fx"),
+        cx = cv.getContext("2d");
+      let W, H, dpr;
+      const rockets = [],
+        parts = [],
+        rings = [];
+      let flash = 0;
+      function size() {
+        dpr = Math.min(devicePixelRatio || 1, 2);
+        W = innerWidth;
+        H = innerHeight;
+        cv.width = W * dpr;
+        cv.height = H * dpr;
+        cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      addEventListener("resize", size);
+      size();
+      const hues = [45, 30, 340, 150, 285, 200, 15];
+      function launch(x, y) {
+        const tx = x ?? W * (0.1 + Math.random() * 0.8),
+          ty = y ?? H * (0.12 + Math.random() * 0.35);
+        const dur = 0.9 + ((H - ty) / H) * 0.5;
+        rockets.push({
+          x: tx + (Math.random() - 0.5) * 60,
+          y: H,
+          tx,
+          ty,
+          sx: 0,
+          t: 0,
+          dur,
+          hue: hues[Math.floor(Math.random() * hues.length)],
+        });
+        rockets[rockets.length - 1].sx = rockets[rockets.length - 1].x;
+        whoosh(dur);
+      }
+      function explode(r) {
+        const n = 90 + Math.floor(Math.random() * 60),
+          type = Math.floor(Math.random() * 3),
+          h2 = (r.hue + 60) % 360;
+        for (let i = 0; i < n; i++) {
+          const a = (Math.PI * 2 * i) / n,
+            sp = type === 1 ? 4.2 : 1.5 + Math.random() * 4.2;
+          parts.push({
+            x: r.tx,
+            y: r.ty,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp,
+            life: 1,
+            decay: 0.008 + Math.random() * 0.01,
+            hue: type === 2 && i % 2 ? h2 : r.hue,
+            size: 1.6 + Math.random() * 1.4,
+          });
+        }
+        boom(0.7 + Math.random() * 0.3);
+        rings.push({ x: r.tx, y: r.ty, r: 6, max: 170, a: 1, hue: r.hue });
+        flash = Math.max(flash, 0.16);
+      }
+      function frame() {
+        cx.globalCompositeOperation = "destination-out";
+        cx.fillStyle = "rgba(0,0,0,.22)";
+        cx.fillRect(0, 0, W, H);
+        cx.globalCompositeOperation = "lighter";
+        for (let i = rockets.length - 1; i >= 0; i--) {
+          const r = rockets[i];
+          r.t += 1 / 60 / r.dur;
+          const e = 1 - Math.pow(1 - Math.min(r.t, 1), 2);
+          r.x = r.sx + (r.tx - r.sx) * e;
+          r.y = H + (r.ty - H) * e;
+          const ang =
+            Math.atan2(r.y - (r.py ?? r.y + 1), r.x - (r.px ?? r.x)) +
+            Math.PI / 2;
+          r.px = r.x;
+          r.py = r.y;
+          cx.save();
+          cx.globalCompositeOperation = "source-over";
+          cx.translate(r.x, r.y);
+          cx.rotate(ang);
+          cx.scale(1.3, 1.3);
+          const fl = 10 + Math.random() * 10;
+          cx.fillStyle = "#ffb300";
+          cx.shadowColor = "#ff6f00";
+          cx.shadowBlur = 14;
+          cx.beginPath();
+          cx.moveTo(-3, 6);
+          cx.lineTo(0, 6 + fl);
+          cx.lineTo(3, 6);
+          cx.fill();
+          cx.shadowBlur = 0;
+          cx.fillStyle = `hsl(${r.hue},90%,60%)`;
+          cx.fillRect(-3, -8, 6, 14);
+          cx.fillStyle = "#fff3c4";
+          cx.beginPath();
+          cx.moveTo(-3, -8);
+          cx.lineTo(0, -15);
+          cx.lineTo(3, -8);
+          cx.fill();
+          cx.fillStyle = "#c62828";
+          cx.beginPath();
+          cx.moveTo(-3, 3);
+          cx.lineTo(-7, 9);
+          cx.lineTo(-3, 7);
+          cx.fill();
+          cx.beginPath();
+          cx.moveTo(3, 3);
+          cx.lineTo(7, 9);
+          cx.lineTo(3, 7);
+          cx.fill();
+          cx.restore();
+          for (let k = 0; k < 3; k++)
+            parts.push({
+              x: r.x + (Math.random() - 0.5) * 4,
+              y: r.y + 8,
+              vx: (Math.random() - 0.5) * 1.2,
+              vy: 1 + Math.random() * 1.5,
+              life: 0.7,
+              decay: 0.035,
+              hue: 30 + Math.random() * 25,
+              size: 1.6,
+            });
+          if (r.t >= 1) {
+            explode(r);
+            rockets.splice(i, 1);
+          }
+        }
+        for (let i = rings.length - 1; i >= 0; i--) {
+          const g = rings[i];
+          g.r += (g.max - g.r) * 0.12 + 1;
+          g.a -= 0.035;
+          if (g.a <= 0) {
+            rings.splice(i, 1);
+            continue;
+          }
+          cx.strokeStyle = `hsla(${g.hue},100%,70%,${g.a})`;
+          cx.lineWidth = 2;
+          cx.beginPath();
+          cx.arc(g.x, g.y, g.r, 0, 7);
+          cx.stroke();
+        }
+        if (flash > 0) {
+          cx.fillStyle = `rgba(255,200,120,${flash})`;
+          cx.fillRect(0, 0, W, H);
+          flash *= 0.85;
+          if (flash < 0.01) flash = 0;
+        }
+        for (let i = parts.length - 1; i >= 0; i--) {
+          const p = parts[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vx *= 0.985;
+          p.vy = p.vy * 0.985 + 0.045;
+          p.life -= p.decay;
+          if (p.life <= 0) {
+            parts.splice(i, 1);
+            continue;
+          }
+          cx.fillStyle = `hsla(${p.hue},100%,${55 + p.life * 25}%,${p.life})`;
+          cx.beginPath();
+          cx.arc(p.x, p.y, p.size * p.life + 0.4, 0, 7);
+          cx.fill();
+        }
+        requestAnimationFrame(frame);
+      }
+      frame();
+      function groundPop(x) {
+        const y = H - 14;
+        pop(0.8);
+        for (let i = 0; i < 16; i++) {
+          const a = -Math.PI * (0.1 + Math.random() * 0.8),
+            sp = 2 + Math.random() * 4;
+          parts.push({
+            x,
+            y,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp,
+            life: 1,
+            decay: 0.03,
+            hue: 30 + Math.random() * 30,
+            size: 1.5,
+          });
+        }
+        rings.push({ x, y, r: 4, max: 55, a: 0.9, hue: 40 });
+        flash = Math.max(flash, 0.1);
+      }
+      function ladi() {
+        const n = 14,
+          x0 = Math.random() * W * 0.5,
+          dir = Math.random() < 0.5 ? 1 : -1,
+          step = Math.min(W / n, 60);
+        for (let i = 0; i < n; i++)
+          setTimeout(
+            () =>
+              groundPop(
+                Math.max(10, Math.min(W - 10, x0 + W * 0.25 + dir * i * step)),
+              ),
+            i * (70 + Math.random() * 50),
+          );
+      }
+      let auto;
+      function startShow() {
+        launch();
+        setTimeout(() => launch(), 350);
+        auto = setInterval(() => {
+          launch();
+          if (Math.random() < 0.4) setTimeout(() => launch(), 300);
+          if (Math.random() < 0.25) ladi();
+        }, 1400);
+      }
+      addEventListener("pointerdown", (e) => {
+        if (e.target.closest("#start,#snd,#act")) return;
+        launch(e.clientX, e.clientY);
+      });
+
+      // ---------- Typewriter ----------
+      const msg =
+        "May the divine light of Diwali fill your life with happiness, prosperity & endless joy";
+      const hl = ["happiness", "prosperity", "endless joy"];
+      function render(s) {
+        let h = s.replace(/&/g, "&amp;");
+        hl.forEach((w) => {
+          const i = msg.indexOf(w);
+          if (s.length > i) {
+            const part = s.slice(i, i + w.length);
+            h = h.replace(part, "<b>" + part + "</b>");
+          }
+        });
+        return h;
+      }
+      function type() {
+        let i = 0;
+        const el = document.getElementById("t");
+        (function step() {
+          if (i <= msg.length) {
+            el.innerHTML = render(msg.slice(0, i++));
+            setTimeout(step, 48);
+          } else {
+            document.getElementById("cur").style.display = "none";
+            setTimeout(() => {
+              document.getElementById("tags").classList.add("show");
+            }, 300);
+            setTimeout(() => {
+              document.getElementById("foot").classList.add("show");
+            }, 900);
+          }
+        })();
+      }
+
+      // ---------- Controls ----------
+      document.getElementById("bRocket").addEventListener("click", () => {
+        if (!ac) return;
+        launch();
+        setTimeout(() => launch(), 250);
+        setTimeout(() => launch(), 500);
+      });
+      document.getElementById("bShots").addEventListener("click", () => {
+        if (ac) ladi();
+      });
+      const snd = document.getElementById("snd");
+      document.getElementById("go").addEventListener("click", () => {
+        initAudio();
+        if (ac.state === "suspended") ac.resume();
+        document.getElementById("start").classList.add("out");
+        document.getElementById("card").classList.add("in");
+        setTimeout(type, 1200);
+        startShow();
+        bell(523.25, 0.12, 4);
+      });
+      snd.addEventListener("click", () => {
+        soundOn = !soundOn;
+        snd.textContent = soundOn ? "🔊 Sound On" : "🔇 Sound Off";
+        if (ac) {
+          master.gain.setTargetAtTime(soundOn ? 0.8 : 0, ac.currentTime, 0.1);
+        }
+      });
+      document.querySelectorAll(".diya").forEach((d) =>
+        d.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (ac && soundOn)
+            bell(scale[Math.floor(Math.random() * scale.length)], 0.12, 3);
+          const r = d.getBoundingClientRect();
+          launch(r.left + r.width / 2, r.top - H * 0.2);
+        }),
+      );
+    </script>
+  </body>
+</html>
